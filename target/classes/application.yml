@@ -1,0 +1,24 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: prigione_records
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+# Configurazione JWT
+jwt:
+  secret: ${JWT_SECRET:chiaveSegretaMoltoPiuLungaPerGarantireMaggioreSicurezzaNellaGenerazioneDeiToken}
+  expiration: 86400000 # 24 ore in millisecondi
+
+# Configurazione logging
+logging:
+  level:
+    root: INFO
+    com.prigione: DEBUG
+    org.springframework.data.mongodb: INFO
+    org.springframework.security: INFO

@@ -15,6 +15,21 @@ jwt:
   secret: ${JWT_SECRET:chiaveSegretaMoltoPiuLungaPerGarantireMaggioreSicurezzaNellaGenerazioneDeiToken}
   expiration: 86400000 # 24 ore in millisecondi
 
+# Configurazione SpringDoc OpenAPI (Swagger)
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operationsSorter: method
+    tagsSorter: alpha
+    display-request-duration: true
+    disable-swagger-default-url: true
+  api-docs:
+    path: /api-docs
+    enabled: true
+  show-actuator: false
+  packages-to-scan: com.prigione.controller
+
 # Configurazione logging
 logging:
   level:

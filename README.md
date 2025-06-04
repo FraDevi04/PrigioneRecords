@@ -40,6 +40,7 @@ Applicazione backend in Java (Spring Boot) per la gestione di studi di registraz
 - JWT per autenticazione
 - MongoDB per la persistenza dei dati
 - Maven per la gestione delle dipendenze
+- SpringDoc OpenAPI 3 per documentazione API
 
 ## 📋 Prerequisiti
 
@@ -60,6 +61,21 @@ Applicazione backend in Java (Spring Boot) per la gestione di studi di registraz
    mvn spring-boot:run
    ```
 
+L'applicazione sarà disponibile su `http://localhost:8080/api`
+
+## 📚 Documentazione API (Swagger)
+
+Una volta avviata l'applicazione, puoi accedere alla documentazione interattiva delle API tramite Swagger UI:
+
+**🔗 [http://localhost:8080/api/swagger-ui/index.html](http://localhost:8080/api/swagger-ui/index.html)**
+
+La documentazione include:
+- Tutti gli endpoint disponibili
+- Schemi di richiesta e risposta
+- Possibilità di testare le API direttamente dall'interfaccia
+- Esempi di utilizzo
+- Informazioni sui codici di stato HTTP
+
 ## 🔑 Configurazione
 
 Modifica il file `application.yml` per configurare:
@@ -70,7 +86,7 @@ Modifica il file `application.yml` per configurare:
 
 ## 🔒 Sicurezza
 
-- Tutti gli endpoint (eccetto /api/auth/**) richiedono autenticazione
+- Tutti gli endpoint (eccetto /api/auth/** e documentazione) richiedono autenticazione
 - Token JWT per gestione sessioni
 - Password criptate con BCrypt
 - Validazione input

@@ -21,6 +21,7 @@ com\prigione\repository\CantanteRepository.class
 com\prigione\controller\DashboardController.class
 com\prigione\model\Cantante.class
 com\prigione\service\RecensioneService.class
+com\prigione\config\SwaggerConfig.class
 com\prigione\security\JwtAuthenticationFilter.class
 com\prigione\service\DashboardService.class
 com\prigione\repository\RecensioneRepository.class

@@ -6,6 +6,7 @@ D:\Progetti\VSCode\Arrigoni\PrigioneRecord\src\main\java\com\prigione\exception\
 D:\Progetti\VSCode\Arrigoni\PrigioneRecord\src\main\java\com\prigione\PrigioneRecordsApplication.java
 D:\Progetti\VSCode\Arrigoni\PrigioneRecord\src\main\java\com\prigione\service\RecensioneService.java
 D:\Progetti\VSCode\Arrigoni\PrigioneRecord\src\main\java\com\prigione\dto\PrenotazioneRequest.java
+D:\Progetti\VSCode\Arrigoni\PrigioneRecord\src\main\java\com\prigione\config\SwaggerConfig.java
 D:\Progetti\VSCode\Arrigoni\PrigioneRecord\src\main\java\com\prigione\repository\CantanteRepository.java
 D:\Progetti\VSCode\Arrigoni\PrigioneRecord\src\main\java\com\prigione\security\JwtAuthenticationFilter.java
 D:\Progetti\VSCode\Arrigoni\PrigioneRecord\src\main\java\com\prigione\model\Prenotazione.java

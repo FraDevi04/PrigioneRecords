@@ -1,19 +1,22 @@
 spring:
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      database: prigione_records
+      uri: mongodb://localhost:27017/prigione_records
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=600s
 
 server:
   port: 8080
-  servlet:
-    context-path: /api
+  # servlet:
+  #   context-path: /api
 
 # Configurazione JWT
 jwt:
   secret: ${JWT_SECRET:chiaveSegretaMoltoPiuLungaPerGarantireMaggioreSicurezzaNellaGenerazioneDeiToken}
   expiration: 86400000 # 24 ore in millisecondi
+  refresh-expiration: 604800000 # 7 giorni in millisecondi
 
 # Configurazione SpringDoc OpenAPI (Swagger)
 springdoc:
@@ -35,5 +38,20 @@ logging:
   level:
     root: INFO
     com.prigione: DEBUG
-    org.springframework.data.mongodb: INFO
+    org.springframework.data.mongodb: DEBUG
+    org.springframework.data.mongodb.core: DEBUG
     org.springframework.security: INFO
+
+# Configurazione rate limiting
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      influx:
+        enabled: true

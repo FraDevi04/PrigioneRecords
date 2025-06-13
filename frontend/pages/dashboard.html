@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div id="error-message" class="error-message" style="display: none;"></div>
+        
+        <div class="dashboard">
+            <h1>La Tua Dashboard</h1>
+            
+            <section class="future-bookings">
+                <h2>Prenotazioni Future</h2>
+                <div id="future-bookings-list" class="bookings-grid"></div>
+            </section>
+            
+            <section class="past-bookings">
+                <h2>Prenotazioni Passate</h2>
+                <div id="past-bookings-list" class="bookings-grid"></div>
+            </section>
+            
+            <section class="favorites">
+                <h2>Studi Preferiti</h2>
+                <div id="favorites-list" class="studios-grid"></div>
+            </section>
+        </div>
+    </div>
+
+    <script type="module">
+        import { DashboardPage } from '../components/features/dashboard.page.js';
+
+        const dashboardPage = new DashboardPage();
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await dashboardPage.afterRender();
+            } catch (error) {
+                console.error('Error initializing page:', error);
+            }
+        });
+    </script>
+</body>
+</html> 

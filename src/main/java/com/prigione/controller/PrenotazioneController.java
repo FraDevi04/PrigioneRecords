@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/prenotazioni")
+@CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:3000"})
 @RequiredArgsConstructor
 @Tag(name = "Prenotazioni", description = "Gestione delle prenotazioni degli studi di registrazione")
 public class PrenotazioneController {
@@ -84,16 +86,16 @@ public class PrenotazioneController {
 
     @GetMapping
     @Operation(
-        summary = "Ottieni tutte le prenotazioni attuali",
-        description = "Restituisce tutte le prenotazioni attuali nel sistema."
+        summary = "Ottieni tutte le prenotazioni future",
+        description = "Restituisce tutte le prenotazioni future nel sistema."
     )
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Lista prenotazioni attuali recuperata con successo",
+        @ApiResponse(responseCode = "200", description = "Lista prenotazioni future recuperata con successo",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = List.class))),
         @ApiResponse(responseCode = "500", description = "Errore interno del server")
     })
-    public ResponseEntity<List<Prenotazione>> getPrenotazioniAttuali() {
-        return ResponseEntity.ok(prenotazioneService.getPrenotazioniAttuali());
+    public ResponseEntity<List<Prenotazione>> getPrenotazioniFuture() {
+        return ResponseEntity.ok(prenotazioneService.getPrenotazioniFuture());
     }
 
     @DeleteMapping("/{id}")

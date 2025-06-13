@@ -2,6 +2,7 @@ package com.prigione.service;
 
 import com.prigione.model.Prenotazione;
 import com.prigione.model.Recensione;
+import com.prigione.repository.CantanteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,17 @@ public class DashboardService {
 
     private final PrenotazioneService prenotazioneService;
     private final RecensioneService recensioneService;
+    private final CantanteRepository cantanteRepository;
 
     public Map<String, Object> getDashboardData() {
-        String cantanteId = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Ottieni l'email del cantante dal token (subject)
+        String cantanteEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        
+        // Trova il cantante per ottenere l'ID
+        var cantante = cantanteRepository.findByEmail(cantanteEmail)
+                .orElseThrow(() -> new RuntimeException("Cantante non trovato"));
+        
+        String cantanteId = cantante.getId();
 
         // Ottieni le prenotazioni del cantante
         List<Prenotazione> prenotazioni = prenotazioneService.getPrenotazioniByCantante(cantanteId);

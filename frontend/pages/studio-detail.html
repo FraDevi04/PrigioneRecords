@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettagli Studio</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div id="error-message" class="error-message" style="display: none;"></div>
+        
+        <div class="studio-details">
+            <h1 id="studio-name"></h1>
+            <div class="studio-info">
+                <p id="studio-description"></p>
+                <p id="studio-address"></p>
+            </div>
+            
+            <div class="booking-section">
+                <h2>Prenota questo studio</h2>
+                <div id="available-slots"></div>
+                <form id="booking-form">
+                    <input type="hidden" id="booking-time">
+                    <button type="submit">Conferma Prenotazione</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { StudioDetailPage } from '../components/features/studio-detail.page.js';
+        import { BookingSystem } from '../components/features/booking.system.js';
+
+        const studioDetailPage = new StudioDetailPage();
+        const bookingSystem = new BookingSystem();
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await studioDetailPage.afterRender();
+                
+                // Initialize booking system
+                const params = new URLSearchParams(window.location.search);
+                const studioId = params.get('id');
+                if (studioId) {
+                    await bookingSystem.initialize(studioId);
+                }
+            } catch (error) {
+                console.error('Error initializing page:', error);
+            }
+        });
+    </script>
+</body>
+</html> 

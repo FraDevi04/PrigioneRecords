@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Import Test - PrigioneRecord</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .console { background: #000; color: #0f0; padding: 20px; border-radius: 5px; font-family: monospace; }
+        .error { color: #f00; }
+        .success { color: #0f0; }
+        .info { color: #00f; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Import Test</h1>
+    <div id="console" class="console"></div>
+    
+    <script src="./config/app.config.js"></script>
+    <script>
+        // Override console per mostrare output nella pagina
+        const originalConsole = { ...console };
+        const consoleDiv = document.getElementById('console');
+        
+        function addToConsole(message, type = 'info') {
+            const span = document.createElement('div');
+            span.className = type;
+            span.innerHTML = message;
+            consoleDiv.appendChild(span);
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+        
+        console.log = (...args) => {
+            originalConsole.log(...args);
+            addToConsole(args.join(' '), 'info');
+        };
+        
+        console.error = (...args) => {
+            originalConsole.error(...args);
+            addToConsole('ERROR: ' + args.join(' '), 'error');
+        };
+        
+        console.warn = (...args) => {
+            originalConsole.warn(...args);
+            addToConsole('WARN: ' + args.join(' '), 'error');
+        };
+        
+        // Carica il test di debug
+        async function runDebugTest() {
+            console.log('🔍 Inizio test import...');
+
+            // Test 1: Import api.service.js
+            try {
+                console.log('📦 Importando api.service.js...');
+                const apiModule = await import('./assets/js/services/api.service.js');
+                console.log('✅ api.service.js importato con successo');
+                console.log('Default export (ApiService):', typeof apiModule.default);
+                console.log('Named export (apiService):', typeof apiModule.apiService);
+                console.log('Named export (ApiError):', typeof apiModule.ApiError);
+                
+                // Test istanziazione apiService
+                if (apiModule.apiService) {
+                    console.log('✅ apiService istanza disponibile');
+                    console.log('baseURL:', apiModule.apiService.baseURL);
+                } else {
+                    console.log('❌ apiService istanza NON disponibile');
+                }
+                
+            } catch (error) {
+                console.error('❌ Errore import api.service.js:', error.message);
+                console.error('Stack:', error.stack);
+            }
+
+            // Test 2: Import auth.service.js
+            try {
+                console.log('\n📦 Importando auth.service.js...');
+                const authModule = await import('./assets/js/services/auth.service.js');
+                console.log('✅ auth.service.js importato con successo');
+                console.log('Default export (AuthService):', typeof authModule.default);
+                
+                // Test istanziazione AuthService
+                const authService = new authModule.default();
+                console.log('✅ AuthService istanziato');
+                
+                // Test accesso all'API
+                console.log('Test getter api...');
+                const api = authService.api;
+                console.log('✅ Getter api funziona:', typeof api);
+                console.log('API baseURL:', api.baseURL);
+                
+            } catch (error) {
+                console.error('❌ Errore import auth.service.js:', error.message);
+                console.error('Stack:', error.stack);
+            }
+
+            // Test 3: Import auth.store.js (quello che fa l'import reale)
+            try {
+                console.log('\n📦 Importando auth.store.js...');
+                const storeModule = await import('./assets/js/store/auth.store.js');
+                console.log('✅ auth.store.js importato con successo');
+                console.log('Default export (authStore):', typeof storeModule.default);
+                
+            } catch (error) {
+                console.error('❌ Errore import auth.store.js:', error.message);
+                console.error('Stack:', error.stack);
+            }
+
+            // Test 4: Simulazione dell'app.js
+            try {
+                console.log('\n📦 Importando app.js...');
+                const appModule = await import('./assets/js/app.js');
+                console.log('✅ app.js importato con successo');
+                
+            } catch (error) {
+                console.error('❌ Errore import app.js:', error.message);
+                console.error('Stack:', error.stack);
+            }
+
+            console.log('\n🔚 Test completato');
+        }
+        
+        // Esegui test al caricamento
+        document.addEventListener('DOMContentLoaded', runDebugTest);
+    </script>
+</body>
+</html> 

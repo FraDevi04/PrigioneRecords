@@ -1,0 +1,24 @@
+/**
+ * @fileoverview Service for authentication-related API calls.
+ */
+import ApiService, { apiService } from './api.service.js';
+
+class AuthService {
+    constructor() {
+        this.api = apiService;
+    }
+
+    async login(credentials) {
+        return this.api.post('/auth/login', credentials);
+    }
+
+    async register(userData) {
+        return this.api.post('/auth/register', userData);
+    }
+
+    // async refreshToken() {
+    //     // Implementation for token refresh if backend supports it
+    // }
+}
+
+export default AuthService; 

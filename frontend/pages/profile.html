@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilo Utente</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div id="error-message" class="error-message" style="display: none;"></div>
+        
+        <div class="profile-section">
+            <h1>Il Tuo Profilo</h1>
+            
+            <div class="profile-info">
+                <div class="info-group">
+                    <label>Nome:</label>
+                    <p id="profile-name"></p>
+                </div>
+                
+                <div class="info-group">
+                    <label>Email:</label>
+                    <p id="profile-email"></p>
+                </div>
+                
+                <div class="info-group">
+                    <label>Telefono:</label>
+                    <p id="profile-phone"></p>
+                </div>
+            </div>
+            
+            <div class="profile-actions">
+                <button onclick="window.location.href='/dashboard'">Vai alla Dashboard</button>
+                <button onclick="window.location.href='/edit-profile'">Modifica Profilo</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { ProfilePage } from '../components/features/profile.page.js';
+
+        const profilePage = new ProfilePage();
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await profilePage.afterRender();
+            } catch (error) {
+                console.error('Error initializing page:', error);
+            }
+        });
+    </script>
+</body>
+</html> 

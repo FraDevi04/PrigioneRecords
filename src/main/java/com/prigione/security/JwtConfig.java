@@ -17,6 +17,9 @@ public class JwtConfig {
     @Value("${jwt.expiration}")
     private Long expiration;
 
+    @Value("${jwt.refresh-expiration}")
+    private Long refreshExpiration;
+
     @Bean
     public SecretKey secretKey() {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
@@ -24,5 +27,9 @@ public class JwtConfig {
 
     public Long getExpiration() {
         return expiration;
+    }
+
+    public Long getRefreshExpiration() {
+        return refreshExpiration;
     }
 }

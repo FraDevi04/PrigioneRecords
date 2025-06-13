@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -25,13 +26,21 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final CustomUserDetailsService userDetailsService;
+    private final CorsConfigurationSource corsConfigurationSource;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
             .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSource))
             .authorizeHttpRequests(auth -> auth
+                // Endpoint di autenticazione (sempre pubblici)
                 .requestMatchers("/api/auth/**").permitAll()
+                
+                // Health check endpoints
+                .requestMatchers("/actuator/health").permitAll()
+                
+                // Documentazione API (sempre pubblica)
                 .requestMatchers(
                     "/api/swagger-ui/**", 
                     "/api/swagger-ui.html", 
@@ -43,6 +52,16 @@ public class SecurityConfig {
                     "/webjars/**",
                     "/v3/api-docs/**"
                 ).permitAll()
+                
+                // Endpoint pubblici per visualizzazione studi e recensioni
+                .requestMatchers("/api/studi", "/api/studi/**").permitAll()
+                .requestMatchers("GET", "/api/recensioni/studio/**").permitAll()
+                .requestMatchers("GET", "/api/prenotazioni/studio/**").permitAll()
+                
+                // OPTIONS requests for CORS preflight
+                .requestMatchers("OPTIONS", "/**").permitAll()
+                
+                // Tutti gli altri endpoint richiedono autenticazione
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session

@@ -23,6 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/recensioni")
+@CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:3000"})
 @RequiredArgsConstructor
 @Tag(name = "Recensioni", description = "Gestione delle recensioni degli studi di registrazione")
 public class RecensioneController {

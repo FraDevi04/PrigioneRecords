@@ -12,27 +12,35 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 
 @RestController
 @RequestMapping("/api/studi")
-@RequiredArgsConstructor
+@CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:3000"})
 @Tag(name = "Studi di Registrazione", description = "Gestione degli studi di registrazione")
 public class StudioController {
 
-    private final StudioService studioService;
+    @Autowired
+    private StudioService studioService;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
     @Operation(
         summary = "Crea un nuovo studio di registrazione",
-        description = "Crea un nuovo studio di registrazione. Richiede privilegi di amministratore.",
-        security = @SecurityRequirement(name = "Bearer Authentication")
+        description = "Crea un nuovo studio di registrazione."
     )
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Studio creato con successo",
@@ -55,8 +63,43 @@ public class StudioController {
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = List.class))),
         @ApiResponse(responseCode = "500", description = "Errore interno del server")
     })
-    public ResponseEntity<List<StudioRegistrazione>> getAllStudi() {
-        return ResponseEntity.ok(studioService.getAllStudi());
+    public ResponseEntity<List<StudioRegistrazione>> getAllStudios() {
+        System.out.println("🔍 Debug: Chiamato getAllStudios()");
+        List<StudioRegistrazione> studi = studioService.getAllStudios();
+        System.out.println("🔍 Debug: Trovati " + studi.size() + " studi");
+        if (!studi.isEmpty()) {
+            System.out.println("🔍 Debug: Primo studio: " + studi.get(0).getNome());
+        }
+        return ResponseEntity.ok(studi);
+    }
+
+    @GetMapping("/debug")
+    @Operation(summary = "Debug database info", description = "Debugging endpoint for database diagnostics")
+    public ResponseEntity<Map<String, Object>> debugDatabase() {
+        Map<String, Object> debug = new HashMap<>();
+        
+        try {
+            // Info connessione
+            debug.put("databaseName", mongoTemplate.getDb().getName());
+            debug.put("collectionExists", mongoTemplate.collectionExists("studi"));
+            
+            // Count documenti diretti
+            long countDirect = mongoTemplate.count(new Query(), "studi");
+            debug.put("directCount", countDirect);
+            
+            // Lista collezioni
+            debug.put("collections", mongoTemplate.getCollectionNames());
+            
+            // Trova documenti grezzi
+            List<Object> rawDocs = mongoTemplate.findAll(Object.class, "studi");
+            debug.put("rawDocuments", rawDocs);
+            debug.put("rawCount", rawDocs.size());
+            
+        } catch (Exception e) {
+            debug.put("error", e.getMessage());
+        }
+        
+        return ResponseEntity.ok(debug);
     }
 
     @GetMapping("/{id}")

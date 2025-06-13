@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -21,18 +22,34 @@ public class JwtService {
     private final SecretKey secretKey;
 
     public String generateToken(Cantante cantante) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("id", cantante.getId());
-        claims.put("nome", cantante.getNome());
-        return createToken(claims, cantante.getEmail());
+        return generateToken(cantante, false);
     }
 
-    private String createToken(Map<String, Object> claims, String subject) {
+    public String generateRefreshToken(Cantante cantante) {
+        return generateToken(cantante, true);
+    }
+
+    private String generateToken(Cantante cantante, boolean isRefreshToken) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("email", cantante.getEmail());
+        claims.put("nome", cantante.getNome());
+        claims.put("cantanteId", cantante.getId());
+        claims.put("tokenType", isRefreshToken ? "REFRESH" : "ACCESS");
+        claims.put("tokenId", UUID.randomUUID().toString());
+        
+        long expiration = isRefreshToken ? 
+            jwtConfig.getRefreshExpiration() : 
+            jwtConfig.getExpiration();
+
+        return createToken(claims, cantante.getEmail(), expiration);
+    }
+
+    private String createToken(Map<String, Object> claims, String subject, long expiration) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtConfig.getExpiration()))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(secretKey)
                 .compact();
     }
@@ -41,8 +58,12 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public String extractId(String token) {
-        return extractAllClaims(token).get("id", String.class);
+    public String extractTokenType(String token) {
+        return extractAllClaims(token).get("tokenType", String.class);
+    }
+
+    public String extractTokenId(String token) {
+        return extractAllClaims(token).get("tokenId", String.class);
     }
 
     public Date extractExpiration(String token) {
@@ -68,6 +89,19 @@ public class JwtService {
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        final String tokenType = extractTokenType(token);
+        
+        return (username.equals(userDetails.getUsername()) && 
+                !isTokenExpired(token) && 
+                "ACCESS".equals(tokenType));
+    }
+
+    public Boolean validateRefreshToken(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        final String tokenType = extractTokenType(token);
+        
+        return (username.equals(userDetails.getUsername()) && 
+                !isTokenExpired(token) && 
+                "REFRESH".equals(tokenType));
     }
 }

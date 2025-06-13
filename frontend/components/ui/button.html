@@ -1,0 +1,82 @@
+<!--
+  Button Component Template
+  
+  Attributi supportati:
+  - data-variant: primary, secondary, outline, danger, success
+  - data-size: sm, md, lg
+  - disabled: true/false
+  - type: button, submit, reset
+  
+  Classi supportate:
+  - btn-loading: per stato di loading
+  - btn-icon-only: per bottoni solo icona
+-->
+
+<!-- Button Standard -->
+<button class="btn btn-primary" type="button">
+  <span class="btn-text">Testo Button</span>
+  <div class="btn-loader" style="display: none;">
+    <i class="fas fa-spinner fa-spin"></i>
+  </div>
+</button>
+
+<!-- Button con Icona -->
+<button class="btn btn-primary" type="button">
+  <i class="fas fa-plus"></i>
+  <span class="btn-text">Aggiungi</span>
+  <div class="btn-loader" style="display: none;">
+    <i class="fas fa-spinner fa-spin"></i>
+  </div>
+</button>
+
+<!-- Button Solo Icona -->
+<button class="btn btn-primary btn-icon-only" type="button" title="Elimina">
+  <i class="fas fa-trash"></i>
+  <div class="btn-loader" style="display: none;">
+    <i class="fas fa-spinner fa-spin"></i>
+  </div>
+</button>
+
+<!-- Button Outline -->
+<button class="btn btn-outline" type="button">
+  <span class="btn-text">Annulla</span>
+</button>
+
+<!-- Button Danger -->
+<button class="btn btn-danger" type="button">
+  <span class="btn-text">Elimina</span>
+</button>
+
+<!-- Button Loading State -->
+<button class="btn btn-primary btn-loading" type="button" disabled>
+  <span class="btn-text" style="display: none;">Salvataggio...</span>
+  <div class="btn-loader">
+    <i class="fas fa-spinner fa-spin"></i>
+  </div>
+</button>
+
+<!-- Button Group -->
+<div class="btn-group">
+  <button class="btn btn-outline active">Tutti</button>
+  <button class="btn btn-outline">Attivi</button>
+  <button class="btn btn-outline">Archiviati</button>
+</div>
+
+<!-- Button con Dropdown -->
+<div class="btn-dropdown">
+  <button class="btn btn-primary" id="dropdown-btn">
+    <span class="btn-text">Azioni</span>
+    <i class="fas fa-chevron-down"></i>
+  </button>
+  <div class="dropdown-menu">
+    <a href="#" class="dropdown-item">Modifica</a>
+    <a href="#" class="dropdown-item">Duplica</a>
+    <div class="dropdown-divider"></div>
+    <a href="#" class="dropdown-item text-danger">Elimina</a>
+  </div>
+</div>
+
+<!-- Floating Action Button -->
+<button class="btn btn-primary btn-fab" title="Nuova Prenotazione">
+  <i class="fas fa-plus"></i>
+</button> 

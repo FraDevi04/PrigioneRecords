@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:3000"})
 @RequiredArgsConstructor
 @Tag(name = "Authentication", description = "Endpoint per autenticazione e registrazione utenti")
 public class AuthController {
@@ -55,5 +57,19 @@ public class AuthController {
     })
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody AuthRequest request) {
         return ResponseEntity.ok(authService.login(request));
+    }
+
+    @PostMapping("/refresh")
+    @Operation(
+        summary = "Aggiorna il token di accesso",
+        description = "Utilizza il token di refresh per ottenere un nuovo token di accesso."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Token aggiornato con successo",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthResponse.class))),
+        @ApiResponse(responseCode = "401", description = "Token di refresh non valido")
+    })
+    public ResponseEntity<AuthResponse> refreshToken(@RequestBody String refreshToken) {
+        return ResponseEntity.ok(authService.refreshToken(refreshToken));
     }
 }

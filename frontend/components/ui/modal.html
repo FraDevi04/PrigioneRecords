@@ -1,0 +1,194 @@
+<!--
+  Modal Component Template
+  
+  Varianti supportate:
+  - modal-sm: Modal piccolo
+  - modal-lg: Modal grande
+  - modal-xl: Modal extra grande
+  - modal-confirm: Modal di conferma
+  - modal-danger: Modal per azioni pericolose
+  
+  Utilizzo:
+  - Aggiungere display: none per nascondere inizialmente
+  - Usare JavaScript per gestire apertura/chiusura
+-->
+
+<!-- Modal Standard -->
+<div id="example-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Titolo Modal</h2>
+      <button class="modal-close" type="button">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Contenuto del modal...</p>
+      
+      <!-- Form esempio -->
+      <form id="modal-form">
+        <div class="form-group">
+          <label for="example-input">Campo esempio</label>
+          <input type="text" id="example-input" class="form-input" placeholder="Inserisci valore...">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" id="modal-cancel">Annulla</button>
+      <button type="submit" class="btn btn-primary" form="modal-form">Conferma</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal di Conferma -->
+<div id="confirm-modal" class="modal modal-confirm" style="display: none;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Conferma Azione</h2>
+      <button class="modal-close" type="button">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="confirm-icon">
+        <i class="fas fa-question-circle"></i>
+      </div>
+      <p>Sei sicuro di voler procedere con questa azione?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary">Annulla</button>
+      <button type="button" class="btn btn-primary">Conferma</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Pericoloso -->
+<div id="danger-modal" class="modal modal-danger" style="display: none;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Azione Pericolosa</h2>
+      <button class="modal-close" type="button">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="warning-message">
+        <i class="fas fa-exclamation-triangle"></i>
+        <p>
+          <strong>Attenzione!</strong> Questa azione è irreversibile e 
+          potrebbe causare la perdita permanente dei dati.
+        </p>
+      </div>
+      
+      <div class="form-group">
+        <label for="confirm-text">
+          Per confermare, digita "ELIMINA" nel campo sottostante:
+        </label>
+        <input 
+          type="text" 
+          id="confirm-text" 
+          class="form-input"
+          placeholder="ELIMINA"
+        >
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary">Annulla</button>
+      <button type="button" class="btn btn-danger" disabled>
+        <span class="btn-text">Elimina Definitivamente</span>
+        <div class="btn-loader" style="display: none;">
+          <i class="fas fa-spinner fa-spin"></i>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Grande -->
+<div id="large-modal" class="modal modal-lg" style="display: none;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Modal Grande</h2>
+      <button class="modal-close" type="button">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-tabs">
+        <nav class="tabs-nav">
+          <button class="tab-link active" data-tab="tab1">Tab 1</button>
+          <button class="tab-link" data-tab="tab2">Tab 2</button>
+          <button class="tab-link" data-tab="tab3">Tab 3</button>
+        </nav>
+        
+        <div class="tab-content">
+          <div id="tab1" class="tab-pane active">
+            <h3>Contenuto Tab 1</h3>
+            <p>Contenuto del primo tab...</p>
+          </div>
+          <div id="tab2" class="tab-pane">
+            <h3>Contenuto Tab 2</h3>
+            <p>Contenuto del secondo tab...</p>
+          </div>
+          <div id="tab3" class="tab-pane">
+            <h3>Contenuto Tab 3</h3>
+            <p>Contenuto del terzo tab...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary">Chiudi</button>
+      <button type="button" class="btn btn-primary">Salva</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Senza Footer -->
+<div id="simple-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Informazioni</h2>
+      <button class="modal-close" type="button">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="info-content">
+        <div class="info-icon">
+          <i class="fas fa-info-circle"></i>
+        </div>
+        <div class="info-text">
+          <h3>Informazione Importante</h3>
+          <p>Questo è un messaggio informativo senza azioni particolari richieste.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Loading -->
+<div id="loading-modal" class="modal modal-loading" style="display: none;">
+  <div class="modal-content">
+    <div class="modal-body text-center">
+      <div class="loading-spinner large"></div>
+      <h3>Caricamento in corso...</h3>
+      <p>Attendere prego, operazione in corso.</p>
+    </div>
+  </div>
+</div>
+
+<!--
+  Script esempio per gestione modal:
+  
+  // Apri modal
+  document.getElementById('example-modal').style.display = 'flex';
+  
+  // Chiudi modal
+  document.getElementById('example-modal').style.display = 'none';
+  
+  // Event listener per chiusura con click fuori
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal')) {
+      e.target.style.display = 'none';
+    }
+  });
+  
+  // Event listener per bottone chiusura
+  document.querySelectorAll('.modal-close').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const modal = e.target.closest('.modal');
+      if (modal) modal.style.display = 'none';
+    });
+  });
+--> 

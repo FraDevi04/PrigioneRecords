@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Import - PDR Troubleshooting</title>
+</head>
+<body>
+    <h1>Test Import Moduli</h1>
+    <div id="results"></div>
+    
+    <script>
+        // Test import come descritto nel PDR
+        async function testImport() {
+            const results = document.getElementById('results');
+            
+            try {
+                results.innerHTML += '<p>🔍 Testing auth.service.js import...</p>';
+                
+                const authModule = await import('./assets/js/services/auth.service.js');
+                results.innerHTML += '<p>✅ Auth service importato con successo!</p>';
+                results.innerHTML += '<p>Default export: ' + (authModule.default ? 'OK' : 'MISSING') + '</p>';
+                
+                // Test istanziazione
+                const authService = new authModule.default();
+                results.innerHTML += '<p>✅ AuthService istanziato con successo!</p>';
+                
+                // Test che api sia disponibile
+                if (authService.api) {
+                    results.innerHTML += '<p>✅ API service disponibile tramite getter!</p>';
+                } else {
+                    results.innerHTML += '<p>❌ API service non disponibile!</p>';
+                }
+                
+            } catch (error) {
+                results.innerHTML += '<p>❌ Errore import: ' + error.message + '</p>';
+                console.error('Errore dettagliato:', error);
+            }
+        }
+        
+        // Avvia test al caricamento
+        document.addEventListener('DOMContentLoaded', testImport);
+    </script>
+</body>
+</html> 

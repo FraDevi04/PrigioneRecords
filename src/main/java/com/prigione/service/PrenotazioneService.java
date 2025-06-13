@@ -77,6 +77,19 @@ public class PrenotazioneService {
         return prenotazioneRepository.findByCantanteId(cantanteId);
     }
 
+    public List<Prenotazione> getMiePrenotazioni() {
+        // Ottieni l'email del cantante dal token (subject)
+        String cantanteEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        
+        // Trova il cantante per ottenere l'ID
+        var cantante = cantanteRepository.findByEmail(cantanteEmail)
+                .orElseThrow(() -> new RuntimeException("Cantante non trovato"));
+        
+        String cantanteId = cantante.getId();
+        
+        return getPrenotazioniByCantante(cantanteId);
+    }
+
     @Cacheable(value = "prenotazioniFuture")
     public List<Prenotazione> getPrenotazioniFuture() {
         return prenotazioneRepository.findByDataGreaterThanEqual(LocalDate.now());

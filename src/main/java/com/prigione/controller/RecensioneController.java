@@ -78,9 +78,8 @@ public class RecensioneController {
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = List.class))),
         @ApiResponse(responseCode = "401", description = "Utente non autenticato")
     })
-    public ResponseEntity<List<Recensione>> getMieRecensioni(
-            @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(recensioneService.getRecensioniByCantante(userDetails.getUsername()));
+    public ResponseEntity<List<Recensione>> getMieRecensioni() {
+        return ResponseEntity.ok(recensioneService.getMieRecensioni());
     }
 
     @GetMapping

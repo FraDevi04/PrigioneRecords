@@ -74,6 +74,19 @@ public class RecensioneService {
         return recensioneRepository.findByCantanteId(cantanteId);
     }
 
+    public List<Recensione> getMieRecensioni() {
+        // Ottieni l'email del cantante dal token (subject)
+        String cantanteEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        
+        // Trova il cantante per ottenere l'ID
+        var cantante = cantanteRepository.findByEmail(cantanteEmail)
+                .orElseThrow(() -> new RuntimeException("Cantante non trovato"));
+        
+        String cantanteId = cantante.getId();
+        
+        return getRecensioniByCantante(cantanteId);
+    }
+
     public List<Recensione> getAllRecensioni() {
         return recensioneRepository.findAll();
     }

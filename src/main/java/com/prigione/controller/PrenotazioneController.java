@@ -79,9 +79,8 @@ public class PrenotazioneController {
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = List.class))),
         @ApiResponse(responseCode = "401", description = "Utente non autenticato")
     })
-    public ResponseEntity<List<Prenotazione>> getMiePrenotazioni(
-            @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(prenotazioneService.getPrenotazioniByCantante(userDetails.getUsername()));
+    public ResponseEntity<List<Prenotazione>> getMiePrenotazioni() {
+        return ResponseEntity.ok(prenotazioneService.getMiePrenotazioni());
     }
 
     @GetMapping

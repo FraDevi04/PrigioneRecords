@@ -1,129 +1,238 @@
-# PrigioneRecords
+# PrigioneRecords 🎵
 
-Applicazione backend in Java (Spring Boot) per la gestione di studi di registrazione, prenotazioni e recensioni.
+Una moderna applicazione full-stack per la gestione di studi di registrazione, prenotazioni e recensioni. Il progetto combina un backend robusto in Java Spring Boot con un frontend responsive in HTML/CSS/JavaScript.
 
-## 🎯 Funzionalità
+## 🌟 Caratteristiche Principali
 
-### Autenticazione e Sicurezza
-- Registrazione utenti (cantanti)
-- Login con JWT
-- Protezione degli endpoint con Spring Security
-- Gestione ruoli e autorizzazioni
+- 🔐 **Autenticazione JWT** - Sistema sicuro di login e registrazione
+- 🏢 **Gestione Studi** - CRUD completo per studi di registrazione
+- 📅 **Sistema di Prenotazioni** - Prenotazione studi con controllo disponibilità
+- ⭐ **Recensioni e Valutazioni** - Sistema di feedback con calcolo automatico delle medie
+- 📊 **Dashboard Utente** - Panoramica personalizzata delle attività
+- 🎨 **UI Moderna** - Frontend responsive e intuitivo
+- 🐳 **Docker Ready** - Setup semplificato con Docker Compose
 
-### Gestione Studi di Registrazione
-- CRUD operazioni per studi di registrazione
-- Visualizzazione dettagli studio
-- Calcolo e aggiornamento media recensioni
+## 🛠️ Stack Tecnologico
 
-### Prenotazioni
-- Creazione prenotazioni per studi di registrazione
-- Verifica disponibilità studio
-- Prevenzione prenotazioni duplicate
-- Validazione date prenotazione
+### Backend
+- **Java 17** - Linguaggio di programmazione
+- **Spring Boot 3.1.5** - Framework principale
+- **Spring Security** - Sicurezza e autenticazione
+- **JWT** - Token-based authentication
+- **MongoDB** - Database NoSQL
+- **Maven** - Gestione dipendenze
+- **SpringDoc OpenAPI 3** - Documentazione API
+- **Caffeine** - Caching in-memory
 
-### Recensioni
-- Creazione recensioni per studi
-- Prevenzione recensioni duplicate
-- Calcolo automatico media recensioni
-- Gestione commenti e valutazioni
+### Frontend
+- **HTML5/CSS3** - Markup e styling
+- **JavaScript ES6+** - Logica frontend
+- **HTTP Server** - Server di sviluppo
+- **Responsive Design** - Compatibilità mobile
 
-### Dashboard Utente
-- Visualizzazione prenotazioni personali
-- Storico recensioni
-- Statistiche utente
+### DevOps & Tools
+- **Docker & Docker Compose** - Containerizzazione
+- **Node.js** - Script di utilità
+- **Git** - Version control
 
-## 🛠️ Tecnologie Utilizzate
+## 📁 Struttura del Progetto
 
-- Java 17
-- Spring Boot 3.1.5
-- Spring Security
-- JWT per autenticazione
-- MongoDB per la persistenza dei dati
-- Maven per la gestione delle dipendenze
-- SpringDoc OpenAPI 3 per documentazione API
+```
+PrigioneRecord/
+├── src/                          # Backend Java Spring Boot
+│   ├── main/java/com/prigione/
+│   │   ├── controller/           # REST Controllers
+│   │   ├── service/              # Business Logic
+│   │   ├── repository/           # Data Access Layer
+│   │   ├── model/                # Entity Models
+│   │   ├── config/               # Configurazioni
+│   │   └── security/             # Security Configuration
+│   └── main/resources/
+│       └── application.yml       # Configurazione applicazione
+├── frontend/                     # Frontend Web Application
+│   ├── pages/                    # Pagine HTML
+│   ├── components/               # Componenti riutilizzabili
+│   ├── assets/                   # CSS, JS, immagini
+│   ├── config/                   # Configurazioni frontend
+│   └── index.html                # Homepage
+├── target/                       # Build artifacts Maven
+├── node_modules/                 # Dipendenze Node.js
+├── pom.xml                       # Configurazione Maven
+├── package.json                  # Configurazione Node.js
+├── docker-compose.yml            # Setup Docker
+└── README.md                     # Questo file
+```
 
-## 📋 Prerequisiti
+## 🚀 Quick Start
 
-- JDK 17 o superiore
-- MongoDB
-- Maven
+### Prerequisiti
+- **JDK 17+**
+- **Node.js 16+** (per script e frontend)
+- **Docker & Docker Compose** (raccomandato)
+- **Git**
 
-## 🚀 Installazione e Avvio
+### Installazione Rapida con Docker
 
-1. Clona il repository
-2. Configura MongoDB (host, porta e database in `application.yml`)
-3. Esegui il build del progetto:
+1. **Clona il repository**
+   ```bash
+   git clone https://github.com/FraDevi04/PrigioneRecords.git
+   cd PrigioneRecord
+   ```
+
+2. **Avvia MongoDB con Docker**
+   ```bash
+   docker-compose up -d
+   ```
+
+3. **Installa dipendenze Node.js**
+   ```bash
+   npm install
+   ```
+
+4. **Build e avvia il backend**
    ```bash
    mvn clean install
-   ```
-4. Avvia l'applicazione:
-   ```bash
    mvn spring-boot:run
    ```
 
-L'applicazione sarà disponibile su `http://localhost:8080/api`
+5. **Avvia il frontend** (in un nuovo terminale)
+   ```bash
+   npm start
+   ```
 
-## 📚 Documentazione API (Swagger)
+### Accesso all'Applicazione
 
-Una volta avviata l'applicazione, puoi accedere alla documentazione interattiva delle API tramite Swagger UI:
+- **Backend API**: [http://localhost:8080/api](http://localhost:8080/api)
+- **Frontend**: [http://localhost:3000](http://localhost:3000)
+- **Swagger UI**: [http://localhost:8080/api/swagger-ui/index.html](http://localhost:8080/api/swagger-ui/index.html)
 
-**🔗 [http://localhost:8080/api/swagger-ui/index.html](http://localhost:8080/api/swagger-ui/index.html)**
+## 📚 Documentazione API
 
-La documentazione include:
-- Tutti gli endpoint disponibili
-- Schemi di richiesta e risposta
-- Possibilità di testare le API direttamente dall'interfaccia
-- Esempi di utilizzo
-- Informazioni sui codici di stato HTTP
+L'applicazione include documentazione API completa tramite Swagger UI:
 
-## 🔑 Configurazione
+**🔗 [Swagger UI - Documentazione Interattiva](http://localhost:8080/api/swagger-ui/index.html)**
 
-Modifica il file `application.yml` per configurare:
-- Porta del server
-- Connessione MongoDB
-- Chiave segreta JWT
-- Durata token JWT
+Funzionalità disponibili:
+- 📖 Documentazione completa di tutti gli endpoint
+- 🧪 Test API direttamente dall'interfaccia
+- 📋 Schemi di richiesta e risposta
+- 💡 Esempi pratici di utilizzo
+- 🔍 Informazioni sui codici di stato HTTP
+
+## 🔑 API Endpoints
+
+### 🔐 Autenticazione
+- `POST /api/auth/register` - Registrazione nuovo utente
+- `POST /api/auth/login` - Login utente
+
+### 🏢 Studi di Registrazione
+- `GET /api/studi` - Lista completa studi
+- `GET /api/studi/{id}` - Dettagli studio specifico
+- `POST /api/studi` - Crea nuovo studio (admin)
+- `PUT /api/studi/{id}` - Modifica studio (admin)
+- `DELETE /api/studi/{id}` - Elimina studio (admin)
+
+### 📅 Prenotazioni
+- `POST /api/prenotazioni` - Crea nuova prenotazione
+- `GET /api/prenotazioni` - Lista tutte le prenotazioni
+- `GET /api/prenotazioni/mie` - Prenotazioni personali
+- `DELETE /api/prenotazioni/{id}` - Cancella prenotazione
+
+### ⭐ Recensioni
+- `POST /api/recensioni` - Crea recensione
+- `GET /api/recensioni/studio/{id}` - Recensioni per studio
+- `GET /api/recensioni/mie` - Recensioni personali
+
+### 📊 Dashboard
+- `GET /api/dashboard` - Dati dashboard utente
+
+## ⚙️ Configurazione
+
+### Backend (application.yml)
+```yaml
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/prigione_records
+  
+jwt:
+  secret: your-secret-key
+  expiration: 86400000  # 24 ore
+```
+
+### Frontend (config/)
+- Configurazioni API endpoints
+- Costanti applicazione
+- Configurazioni ambiente
 
 ## 🔒 Sicurezza
 
-- Tutti gli endpoint (eccetto /api/auth/** e documentazione) richiedono autenticazione
-- Token JWT per gestione sessioni
-- Password criptate con BCrypt
-- Validazione input
+- ✅ **JWT Authentication** - Token sicuri per sessioni
+- ✅ **BCrypt Password Hashing** - Crittografia password
+- ✅ **Spring Security** - Protezione endpoint
+- ✅ **CORS Configuration** - Controllo accessi cross-origin
+- ✅ **Input Validation** - Validazione dati in ingresso
+- ✅ **Rate Limiting** - Protezione contro spam
 
-## 📝 API Endpoints
+## 🧪 Testing e Debug
 
-### Autenticazione
-- POST `/api/auth/register` - Registrazione nuovo cantante
-- POST `/api/auth/login` - Login cantante
+### Script di Utilità
+```bash
+# Test backend connectivity
+node test_backend.js
 
-### Studi di Registrazione
-- GET `/api/studi` - Lista studi
-- GET `/api/studi/{id}` - Dettagli studio
-- POST `/api/studi` - Crea studio (admin)
-- PUT `/api/studi/{id}` - Modifica studio (admin)
-- DELETE `/api/studi/{id}` - Elimina studio (admin)
+# Correzione dati studi
+node fix_studi_data.js
+```
 
-### Prenotazioni
-- POST `/api/prenotazioni` - Crea prenotazione
-- GET `/api/prenotazioni` - Lista prenotazioni
-- GET `/api/prenotazioni/mie` - Prenotazioni personali
-- DELETE `/api/prenotazioni/{id}` - Cancella prenotazione
+### Debug Tools
+- File di debug: `frontend/debug_test.html`
+- Test import: `frontend/test_import.html`
 
-### Recensioni
-- POST `/api/recensioni` - Crea recensione
-- GET `/api/recensioni/studio/{id}` - Recensioni studio
-- GET `/api/recensioni/mie` - Recensioni personali
+## 🚧 Sviluppo
 
-### Dashboard
-- GET `/api/dashboard` - Dati dashboard utente
+### Setup Ambiente di Sviluppo
+1. Configura IDE (IntelliJ IDEA/VS Code)
+2. Installa plugin: Spring Boot, Java, JavaScript
+3. Configura MongoDB locale o usa Docker
+4. Imposta hot-reload per frontend
 
-## 👥 Autori
+### Best Practices
+- Usa branch feature per nuove funzionalità
+- Scrivi test per nuove API
+- Mantieni il codice documentato
+- Segui le convenzioni Spring Boot
 
-- Francesco Devillanova
-- Davide Galliani
-- Francesco Bonavita
+## 🤝 Contribuire
+
+1. **Fork** il repository
+2. **Crea** un branch feature (`git checkout -b feature/nuova-funzionalita`)
+3. **Commit** le modifiche (`git commit -am 'Aggiunge nuova funzionalità'`)
+4. **Push** al branch (`git push origin feature/nuova-funzionalita`)
+5. **Apri** una Pull Request
+
+## 👥 Team di Sviluppo
+
+- **Francesco Devillanova** - Backend Developer
+- **Davide Galliani** - Full-Stack Developer  
+- **Francesco Bonavita** - Frontend Developer
 
 ## 📄 Licenza
 
-Questo progetto è sotto licenza MIT.
+Questo progetto è distribuito sotto licenza **MIT**. Vedi il file `LICENSE` per maggiori dettagli.
+
+## 🆘 Supporto
+
+Per problemi o domande:
+- 🐛 Apri una [issue](https://github.com/FraDevi04/PrigioneRecords/issues)
+- 📧 Contatta il team di sviluppo
+- 📖 Consulta la documentazione Swagger
+
+---
+
+⭐ **Se questo progetto ti è utile, lascia una stella su GitHub!** ⭐
